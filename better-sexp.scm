@@ -39,7 +39,7 @@
 
           ((pair? head)
            (flatten bso (tokenize-better-sexp head) bsc
-                        (tokenize-better-sexp tail) bsc))
+                        (tokenize-better-sexp tail)))
 
           ((equal? head ':)
            (flatten bso (tokenize-better-sexp tail) bsc))
