@@ -7,13 +7,16 @@
       (cond
         ((null? tail)
          (list
-           (if (not (pair? head)
-                head
-                (from-better-sexp head)))))
+           (if (not (pair? head))
+               head
+               (from-better-sexp head))))
 
         ((pair? head)
          (cons (from-better-sexp head)
                (from-better-sexp tail)))
+
+        ((equal? head ':)
+         (list (from-better-sexp tail)))
 
         (else
          (cons head
