@@ -3,7 +3,7 @@
 This is an experimental S-Expressions extension intended to make LISP a bit more 
 readable (or at least have less parenthesis).
 
-This example is written for CHICKEN scheme
+This example is written for [CHICKEN scheme](https://call-cc.org/)
 (`csm -program example ; ./example` to run), but it should be easily ported to
 other Schemes.
 
