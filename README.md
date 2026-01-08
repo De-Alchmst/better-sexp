@@ -12,8 +12,8 @@ other Schemes.
 ```
 : opens a new list until it's parent list closes
 
-   (foo : bar baz : bach)
-    => (foo (bar baz (bax)))
+  (foo : bar baz : bach)
+  => (foo (bar baz (bax)))
 
 :: Closes current list (including lists opened with :) and opens a new one
    in it's place
@@ -34,10 +34,10 @@ other Schemes.
     Can be followed by another ::: (no special effect) or :: (which in this case
     acts like :)
 
-    (foo : bar ::: baz bax :: bach)
-    ; same as (foo : bar ::: bar ::: bax :: bach)
-    ; same as (foo : bar ::: bar bax : bach)
-    => (foo (bar) baz bax (bach))
+  (foo : bar ::: baz bax :: bach)
+  ; same as (foo : bar ::: bar ::: bax :: bach)
+  ; same as (foo : bar ::: bar bax : bach)
+  => (foo (bar) baz bax (bach))
 
 ```
 
