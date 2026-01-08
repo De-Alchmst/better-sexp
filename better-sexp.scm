@@ -30,11 +30,14 @@
     ;; special symbols for opening and closing
     (define bso (gensym 'better-sexp-open))
     (define bsc (gensym 'better-sexp-close))
+    (define bsv (gensym 'better-sexp-value))
             
 
     ;; takes a better-sexp and returns a flat list of it's tokenised
     ;; representation
     ;; uses bso/bsc to represent openings and closings lists
+    ;; uses bsv to represent a literal value, which should be closed with bsc
+    ;; for internal reasons
     ;; e.g.
     ;; (begin (print "hello") (+ 1 2 : - 3 1))
     ;; ==> ('begin bso 'print "hello" bsc bso '+ 1 2 bso '- 3 1 bsc bsc)
@@ -62,14 +65,10 @@
           ((equal? head '::)
            (flatten bsc bso (tokenize-better-sexp tail))) 
 
-          ;; (::: x) : closes current list, opens a new one and
-          ;; passes tail to identity function without closing
-          ;; pass to identity makes code simpler, as I can have each case
-          ;; handle it's own closing without interuptions from outside world
-          ;; it does not work in quoted lists, however, so it should be reworked
-          ;; at some point
+          ;; (::: x) : closes current list, opens bsv
+          ;; bsv is a list of values, until closed with bsc
           ((equal? head ':::)
-           (flatten bsc bso 'identity (tokenize-better-sexp tail)))
+           (flatten bsc bsv (tokenize-better-sexp tail)))
 
           ;; (x y) : evaluates tail and conses head onto it
           (else
@@ -103,6 +102,13 @@
               ((equal? head bsc)
                (set! tokens tail)
                '())
+
+              ;; BSV : get a list from current tokens until matching BSC
+              ;; but treat it as values instead  and append the result of
+              ;; remaining tokens to it
+              ((equal? head bsv)
+               (append (loop tail)
+                       (loop tokens)))
 
               ;; anything else: just cons it onto the result of
               ;; remaining tokens until matching BSC
