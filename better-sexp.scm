@@ -66,6 +66,8 @@
           ;; passes tail to identity function without closing
           ;; pass to identity makes code simpler, as I can have each case
           ;; handle it's own closing without interuptions from outside world
+          ;; it does not work in quoted lists, however, so it should be reworked
+          ;; at some point
           ((equal? head ':::)
            (flatten bsc bso 'identity (tokenize-better-sexp tail)))
 
@@ -84,28 +86,28 @@
       ;; a matching bsc is found, at which point it returns the constructed
       ;; list and sets the rest of unevaluated tokens to the 'tokens' variable
       ;; this turned out to be less messy than dealing with values
-      (let ((tokens (tokenize-better-sexp obj)))
-        (let loop ((ts tokens))
-          (if (null? ts) '() ;; exit at the end of tokens
-            (let ((head (car ts))
-                  (tail (cdr ts)))
+      (define tokens (tokenize-better-sexp obj))
+      (let loop ((ts tokens))
+        (if (null? ts) '() ;; exit at the end of tokens
+          (let ((head (car ts))
+                (tail (cdr ts)))
 
-              (cond
-                ;; BSO : get a list from current tokens until matching BSC
-                ;; and cons it onto result of remaining tokens
-                ((equal? head bso)
-                 (cons (loop tail)
-                       (loop tokens)))
+            (cond
+              ;; BSO : get a list from current tokens until matching BSC
+              ;; and cons it onto result of remaining tokens
+              ((equal? head bso)
+               (cons (loop tail)
+                     (loop tokens)))
 
-                ;; BSC : end current list and set remaining tokens
-                ((equal? head bsc)
-                 (set! tokens tail)
-                 '())
+              ;; BSC : end current list and set remaining tokens
+              ((equal? head bsc)
+               (set! tokens tail)
+               '())
 
-                ;; anything else: just cons it onto the result of
-                ;; remaining tokens until matching BSC
-                (else
-                 (cons head (loop tail))))))))))
+              ;; anything else: just cons it onto the result of
+              ;; remaining tokens until matching BSC
+              (else
+               (cons head (loop tail)))))))))
 
   
   ;; takes a list of expressions using better-sexp syntax

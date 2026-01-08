@@ -27,5 +27,5 @@
   ;; as it's a macro, it cannot be applied on a runtime-generated list,
   ;; but it can be used with comile-time known lists
   (write (with-better-sexp
-           '(D : E : F)))
+           '(foo : bar baz :: bax)))
   (newline))
