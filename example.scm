@@ -16,16 +16,16 @@
       ::: x)
 
     ;; semicolon style
-    : print (factorial 5) ::
-    newline ::
-    print (foo 'hi) ::
-    newline ::
+    (print (factorial 5) ::
+     newline ::
+     print (foo 'hi) ::
+     newline ::
 
-      ;; it's a simple preprocessor, so quoted lists are also affected
-    write '( A : B : C) :: newline)
+     ;; it's a simple preprocessor, so quoted lists are also affected
+     write '( A : B : C) :: newline))
 
   ;; as it's a macro, it cannot be applied on a runtime-generated list,
   ;; but it can be used with comile-time known lists
   (write (with-better-sexp
-           '(foo : bar ::: baz ::: bax : bach)))
+           '(foo : bar ::: baz ::: bax :: bach)))
   (newline))

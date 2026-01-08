@@ -26,16 +26,18 @@ readable (or at least have less parenthesis).
      (write (foo (bar)))
      (newline)
 
-:::
+::: Closes current list and puts whatever follows in as a single values.
+    Can be followed by another ::: (no special effect) or :: (which in this case
+    acts like :)
+
+    (foo : bar ::: baz bax :: bach)
+    ; same as (foo : bar ::: bar ::: bax :: bach)
+    ; same as (foo : bar ::: bar bax : bach)
+    => (foo (bar) baz bax (bach))
 
 ```
 
-## TODO
-
-`:::` is currently implemented by wrapping it's right side in a `identity`
-function.
-This works in evaluated code, but is not usable in quoted list construction.
-Make it not do that.
+See [ecample.scm](./example.scm).
 
 ## See also
 
