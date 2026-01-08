@@ -41,7 +41,7 @@ other Schemes.
 
 ```
 
-See [ecample.scm](./example.scm).
+See [example.scm](./example.scm).
 
 ## See also
 
