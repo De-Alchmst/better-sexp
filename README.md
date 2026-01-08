@@ -3,6 +3,10 @@
 This is an experimental S-Expressions extension intended to make LISP a bit more 
 readable (or at least have less parenthesis).
 
+This example is written for CHICKEN scheme
+(`csm -program example ; ./example` to run), but it should be easily ported to
+other Schemes.
+
 ### New syntax
 
 ```
