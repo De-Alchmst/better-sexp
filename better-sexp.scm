@@ -1,5 +1,26 @@
+; MIT License
+
+; Copyright (c) 2026 Đe-Alchmst
+
+; Permission is hereby granted, free of charge, to any person obtaining a copy
+; of this software and associated documentation files (the "Software"), to deal
+; in the Software without restriction, including without limitation the rights
+; to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+; copies of the Software, and to permit persons to whom the Software is
+; furnished to do so, subject to the following conditions:
+
+; The above copyright notice and this permission notice shall be included in all
+; copies or substantial portions of the Software.
+
+; THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+; IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+; FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+; AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+; LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+; OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+; SOFTWARE.
+
 (module better-sexp (with-better-sexp)
-; (module better-sexp (parse-better-sexp tokenize-better-sexp)
   (import scheme (chicken base)
           (chicken syntax)
           srfi-1)
@@ -53,7 +74,11 @@
            (cons head
                  (tokenize-better-sexp tail))))))
 
+
     ;; takes a better-sexp, tokenizes it and parses the tokens back to a list
+    ;; e.g.
+    ;; ('begin bso 'print "hello" bsc bso '+ 1 2 bso '- 3 1 bsc bsc)
+    ;; ==> (begin (print "hello") (+ 1 2 (- 3 1)))
     (define (parse-better-sexp obj)
       ;; loop is called for every bso encountered, and continues until
       ;; a matching bsc is found, at which point it returns the constructed
