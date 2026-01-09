@@ -123,6 +123,6 @@
     ;; allows custom transformation logic
     (er-macro-transformer
       (lambda (exp rename compare)
-        ;; replace with-better-sexp with begin befor passing to the parser
+        ;; replace with-better-sexp with begin before passing to the parser
         ;; this allows multiple expressions inside the with-better-sexp
         (parse-better-sexp (cons 'begin (cdr exp)))))))

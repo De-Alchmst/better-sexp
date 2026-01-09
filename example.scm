@@ -22,7 +22,7 @@
      newline ::
 
      ;; it's a simple preprocessor, so quoted lists are also affected
-     write '( A : B : C) :: newline))
+     write '(A : B : C) :: newline))
 
   ;; as it's a macro, it cannot be applied on a runtime-generated list,
   ;; but it can be used with comile-time known lists
